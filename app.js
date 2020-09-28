@@ -1,7 +1,7 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 const app = express();
-let port = 8081;
+let port = 80;
 const connection = require('./DAL/connection')
 const ProductModel = require('./DAL/models/product.model');
 
@@ -12,6 +12,7 @@ app.use(bodyParser.urlencoded({
 
 // parse application/json
 app.use(bodyParser.json())
+app.get('/', (req, res) => res.send('<h1>Working!</h1>'));
 
 app.get("/products", (req, res) => {
     ProductModel.find((err, data) => {
