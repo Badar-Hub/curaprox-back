@@ -17,13 +17,13 @@ app.use(bodyParser.json());
 app.use(serveStatic(__dirname + "/dist"));
 
 // app.get("/", express.static("dist"));
-app.get("/products", (req, res) => {
+app.get("/api/products", (req, res) => {
   ProductModel.find((err, data) => {
     if (!err) res.json(data);
   });
 });
 
-app.post("/product", (req, res) => {
+app.post("/api/product", (req, res) => {
   let product = new ProductModel(req.body);
   console.log(req.body);
   product.save((err, data) => {
