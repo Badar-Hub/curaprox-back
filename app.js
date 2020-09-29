@@ -14,9 +14,9 @@ app.use(
 
 // parse application/json
 app.use(bodyParser.json());
-app.use(serveStatic(__dirname + "/dist"));
+app.use('/', serveStatic(__dirname + "/dist"));
+app.use('/admin', serveStatic(__dirname + "/dist-back"));
 
-// app.get("/", express.static("dist"));
 app.get("/api/products", (req, res) => {
   ProductModel.find((err, data) => {
     if (!err) res.json(data);
