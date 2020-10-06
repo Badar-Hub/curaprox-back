@@ -60,6 +60,12 @@ app.post("/api/product", multipartMiddleware, (req, res) => {
   }
 });
 
+app.delete("/api/product/:id", (req, res) => {
+  ProductModel.findByIdAndDelete(req.params.id, (err, data) => {
+    if (!err) res.status(200);
+  });
+});
+
 app.listen(port, () => {
   console.log(`Listening on port ${port}...`);
 });
