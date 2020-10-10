@@ -41,8 +41,8 @@ app.get("/api/product/:id", (req, res) => {
       CategoryModel.findById(data.category_id, (err1, data1) => {
         if (!err1) {
           data.category = data1.title;
-          res.json(data);
-        } else res.status(400).send(err1);
+        }
+        res.json(data);
       });
     } else {
       res.status(400).send(err);
