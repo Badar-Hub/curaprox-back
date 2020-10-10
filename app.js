@@ -39,9 +39,11 @@ app.get("/api/product/:id", (req, res) => {
   ProductModel.findById(req.params.id, (err, data) => {
     if (!err) {
       CategoryModel.findById(data.category_id, (err1, data1) => {
-        data.category = data1.title;
-        console.log(data1);
-        res.json(data);
+        if (!err1) {
+          data.category = data1.title;
+          console.log(data1);
+          res.json(data);
+        }
       });
     }
   });
