@@ -4,6 +4,7 @@ var fs = require("fs");
 var formidable = require("formidable");
 const connection = require("./DAL/connection");
 const ProductModel = require("./DAL/models/product.model");
+const CategoryModel = require("./DAL/models/category.model");
 const serveStatic = require("serve-static");
 // parse application/x-www-form-urlencoded
 const app = express();
@@ -36,7 +37,28 @@ app.get("/api/products", (req, res) => {
 
 app.get("/api/product/:id", (req, res) => {
   ProductModel.findById(req.params.id, (err, data) => {
-    if (!err) res.json(data);
+    if (!err) {
+      CategoryModel.findById(data.category_id, (err1, data1) => {
+        data.category = data1.title;
+        console.log(data1);
+        res.json(data);
+      });
+    }
+  });
+});
+
+app.get("/api/product/:id/related", (req, res) => {
+  ProductModel.findById(req.params.id, (err, data) => {
+    if (!err) {
+      ProductModel.find({ category_id: data.category_id }, (err10, data10) => {
+        if (!err) {
+          console.log(data10);
+          data10 = data10.filter((x) => x._id != data.id);
+          console.log(data10);
+          res.json(data10);
+        }
+      });
+    }
   });
 });
 
@@ -55,6 +77,9 @@ app.post("/api/product", multipartMiddleware, (req, res) => {
       product.img = "files/prod-images/" + file.name;
       product.save((err, data) => {
         if (!err) res.json(data);
+        else {
+          res.status(400).send(err);
+        }
       });
     });
   }
@@ -62,7 +87,20 @@ app.post("/api/product", multipartMiddleware, (req, res) => {
 
 app.delete("/api/product/:id", (req, res) => {
   ProductModel.findByIdAndDelete(req.params.id, (err, data) => {
-    if (!err) res.status(200);
+    if (err) {
+      res.status(400).send("Error Occured");
+      console.log(err);
+    } else {
+      res.status(200).send("Product Deleated!");
+    }
+  });
+});
+
+//Categories
+
+app.get("/api/categories", (req, res) => {
+  CategoryModel.find((err, data) => {
+    if (!err) res.json(data);
   });
 });
 
