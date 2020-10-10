@@ -41,10 +41,11 @@ app.get("/api/product/:id", (req, res) => {
       CategoryModel.findById(data.category_id, (err1, data1) => {
         if (!err1) {
           data.category = data1.title;
-          console.log(data1);
           res.json(data);
-        }
+        } else res.status(400).send(err1);
       });
+    } else {
+      res.status(400).send(err);
     }
   });
 });
@@ -53,14 +54,12 @@ app.get("/api/product/:id/related", (req, res) => {
   ProductModel.findById(req.params.id, (err, data) => {
     if (!err) {
       ProductModel.find({ category_id: data.category_id }, (err10, data10) => {
-        if (!err) {
-          console.log(data10);
+        if (!err10) {
           data10 = data10.filter((x) => x._id != data.id);
-          console.log(data10);
           res.json(data10);
-        }
+        } else res.status(400).send(err10);
       });
-    }
+    } else res.status(400).send(err);
   });
 });
 
