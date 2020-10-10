@@ -5,9 +5,9 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cd ../curaprox-admin-front/ && npm run build:final && cd ../curaprox/ && npm run build:final",
-    "build:back": "cd ../curaprox-admin-front/ && npm run build:final",
-    "build:front": "cd ../curaprox/ && npm run build:final",
+    "build": "git pull && npm run build:back && npm run build:front",
+    "build:back": "cd ../curaprox-admin-front/ && git pull && npm run build:final",
+    "build:front": "cd ../curaprox/ && git pull && npm run build:final",
     "start": "nodemon app.js"
   },
   "author": "",
