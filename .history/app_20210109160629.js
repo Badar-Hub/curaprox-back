@@ -164,12 +164,12 @@ app.get("/api/categories", (req, res) => {
 
 app.post("/api/categories", multipartMiddleware, (req, res) => {
   let category = new CategoryModel(req.body);
-    category.save((err, data) => {
-      if (!err) res.json(data);
-      else {
-        res.status(400).send(err);
-      }
-    });
+      category.save((err, data) => {
+        if (!err) res.json(data);
+        else {
+          res.status(400).send(err);
+        }
+      });
 });
 
 app.listen(port, () => {
