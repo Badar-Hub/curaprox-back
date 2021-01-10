@@ -1,7 +1,6 @@
 db.products.insert({
   name: 'CS 3960',
   price: 650,
-  discount: 500,
   sku: 'CS3960',
   description: "When your gums fall in love Why do dental professionals recommend the CS 3960? Two words. Gentle. And efficient. The ultra-fine, CUREN® filaments are densely packed on the brush head to give exceptional cleaning power. And it looks beautiful. Plaque’s toughest enemy is the gentleness of CUREN®-bristles: CS toothbrushes really are incredibly gentle. The 3960 CUREN®-filaments of the CS 3960 ultra soft form an uncommonly dense and efficient cleaning surface. While they are gentle on gums and teeth, CUREN®-filaments are extremely hard on plaque. Anyone who tries a CS toothbrush will never want to do without this brushing experience again. CURAPROX toothbrushes not only prevent brushing damage, but also break up and remove plaque perfectly. CUREN ®-filaments are stiffer than nylon and remain just as stable in the mouth as when they are dry. These properties make it possible to produce toothbrushes with a large number of ultrafine bristles. Gentle action thanks to CUREN®-filaments. Efficient cleaning surface thanks to a dense array of CUREN®-filaments. There’s no escape: compact head, slightly angled Octagonal handle helps users to brush at the correct angle",
   img: 'files/prod-images/cs-5460.jpg'
