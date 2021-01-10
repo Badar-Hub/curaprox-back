@@ -5,6 +5,9 @@ const categorySchema = new mongoose.Schema({
     type: String,
     required: "Required",
   },
+  parentCategoryId: {
+    type: String
+  }
 });
 
 const model = mongoose.model("category", categorySchema, "categories");

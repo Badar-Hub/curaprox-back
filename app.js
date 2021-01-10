@@ -93,7 +93,11 @@ app.post("/api/product", multipartMiddleware, (req, res) => {
     }
 
     fs.rename(oldpath, newpath, function (err) {
-      if (err) throw err;
+      if (err) {
+        if(err.code === "EXDEV") {
+          fs.copyFileSync(oldpath, newpath);
+        }
+      }
       // you may respond with another html page
       product.img = "files/prod-images/" + len + path.extname(file.name);
       product.save((err, data) => {
@@ -159,6 +163,48 @@ app.delete("/api/product/:id", (req, res) => {
 app.get("/api/categories", (req, res) => {
   CategoryModel.find((err, data) => {
     if (!err) res.json(data);
+  });
+});
+
+app.get("/api/categories/:id", (req, res) => {
+  CategoryModel.findById(req.params.id, (err, data) => {
+    if (!err) res.json(data);
+  });
+});
+
+app.post("/api/category", (req, res) => {
+  let category = new CategoryModel(req.body);
+  category.save((err, data) => {
+    if (!err) res.json(data);
+    else {
+      res.status(400).send(err);
+    }
+  });
+});
+
+// Sub Categories
+
+app.get("/api/category/:id/subcategories", (req, res) => {
+  CategoryModel.find({ parentCategoryId: req.params.id }, (err, subCats) => {
+    if (err) {
+      res.status(400).send(err);
+    }
+    else {
+      res.json(subCats);
+    }
+  });
+});
+
+app.post("/api/category/:id/subcategories/", (req, res) => {
+  let category = new CategoryModel(req.body);
+  category.parentCategoryId = req.params.id;
+  category.save((err, subCat) => {
+    if (err) {
+      res.status(400).send(err);
+    }
+    else {
+      res.json(subCat);
+    }
   });
 });
 
